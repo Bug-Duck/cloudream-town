@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Town from './components/Town.vue'
 import Plan from './components/Plan.vue'
+import About from './components/About.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -16,6 +17,10 @@ const router = createRouter({
     {
       path: '/cloudream-plan',
       component: Plan,
+    },
+    {
+      path: '/about',
+      component: About,
     },
   ],
 })
