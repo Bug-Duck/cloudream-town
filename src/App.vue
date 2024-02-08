@@ -29,7 +29,7 @@ import CustomButton from './CustomButton.vue'
     >
       在线游玩
     </CustomButton>
-    <CustomButton type="primary" icon="login-box">
+    <CustomButton disabled type="primary" icon="login-box">
       登录 & 注册
     </CustomButton>
   </div>

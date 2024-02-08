@@ -10,18 +10,18 @@ import CustomButton from './CustomButton.vue'
     见证每一次相遇
   </h2>
   <div class="flex gap-6">
-    <CustomButton type="primary" icon="computer">
+    <CustomButton disabled type="primary" icon="computer">
       PC 端下载
     </CustomButton>
-    <CustomButton icon="smartphone">
+    <CustomButton disabled icon="smartphone">
       移动端下载
     </CustomButton>
   </div>
   <div class="flex gap-3 mt-4 font-size-5">
-    <a href="#" class="ri-qq-line" />
-    <a href="https://github.com/Bug-Duck/cloudream-town" class="ri-github-line" />
-    <a href="https://space.bilibili.com/673305329" class="ri-bilibili-line" />
-    <a href="#" class="ri-wechat-2-line" />
+    <a href="#"><i class="ri-qq-line" /></a>
+    <a href="https://github.com/Bug-Duck/cloudream-town"><i class="ri-github-line" /></a>
+    <a href="https://space.bilibili.com/673305329"><i class="ri-bilibili-line" /></a>
+    <a href="#"><i class="ri-wechat-2-line" /></a>
   </div>
 </template>
 
@@ -41,11 +41,11 @@ h2::after {
   z-index: -1;
 }
 
-a {
+i {
   color: #5a5a5a;
 }
 
-a:hover {
+i:hover {
   filter: brightness(0.8);
 }
 </style>

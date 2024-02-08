@@ -8,10 +8,10 @@ defineProps<{
 </script>
 
 <template>
-  <a v-if="href && !disabled" :href="href" :data-button-style="type ?? 'dark'" class="backdrop-blur">
+  <a v-if="href && !disabled" :href="href" disabled="false" :data-button-style="type ?? 'dark'" class="backdrop-blur">
     <span><slot /><i v-if="icon" :class="`ri-${icon}-line pl-1 my-auto`" /></span>
   </a>
-  <a v-else :data-button-style="type ?? 'dark'" class="backdrop-blur">
+  <a v-else :disabled="disabled ?? false" :data-button-style="type ?? 'dark'" class="backdrop-blur">
     <span><slot /><i v-if="icon" :class="`ri-${icon}-line pl-1 my-auto`" /></span>
   </a>
 </template>
@@ -31,15 +31,22 @@ a {
   color: white !important;
 }
 
-a:hover {
+[disabled="true"] {
+  filter: brightness(1);
+  filter: grayscale(0.8);
+  color: #d3d3d3 !important;
+}
+
+[disabled="false"]:hover {
   filter: brightness(1.1);
 }
 
 [data-button-style="dark"] {
   border-color: #7e8383;
   background-color: #424a49;
-  &:hover {
-    filter: brightness(1.2);
+
+  &[disabled="false"]:hover {
+    filter: brightness(1.3);
   }
 }
 
