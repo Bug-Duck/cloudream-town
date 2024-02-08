@@ -1,58 +1,80 @@
 <script setup lang="ts">
+import { onMounted } from 'vue'
 import CustomButton from './CustomButton.vue'
+import HomePage from './HomePage.vue'
+
+onMounted(() => {
+  window.location.hash = 'home'
+  update()
+})
+
+function update() {
+  setTimeout(() => {
+    const hash = window.location.hash
+    const parent = document.getElementById('nav')
+    if (parent) {
+      for (const child of parent.children)
+        child.className = ''
+    }
+    if (hash) {
+      const element = document.querySelector(`a[href="${hash}"]`)
+      if (element)
+        element.className = 'line'
+    }
+  }, 30)
+}
 </script>
 
 <template>
-  <!-- <section class="target" /> -->
-  <section>
-    <section class="cover p-13.5">
-      <h1><img alt="云梦小镇" src="/logo-dark.png" class="logo w-74 mt-8"></h1>
-      <img src="/sign.png" class="absolute w-102 left-48 bottom-15">
-      <div class="gallery my-6 w-94 h-53 bg-gray-600" />
-      <h2 class="mb-8" style="color: #74b5d1; --line-color: #fef4a4;">
-        见证每一次相遇
-      </h2>
-      <div class="downloads flex gap-6">
-        <CustomButton type="primary" icon="computer">
-          PC 端下载
-        </CustomButton>
-        <CustomButton icon="smartphone">
-          移动端下载
-        </CustomButton>
-      </div>
-      <div class="links flex gap-3">
-        <a href="#" class="ri-qq-line" />
-        <a href="https://github.com/Bug-Duck/cloudream-town" class="ri-github-line" />
-        <a href="https://space.bilibili.com/673305329" class="ri-bilibili-line" />
-        <a href="#" class="ri-wechat-2-line" />
-      </div>
-      <nav style="--line-color: #80cebc;">
-        <a class="line" href="#homepage">主页</a>
-        <a class="line" href="#notice">公告</a>
-        <a class="line" href="#contact">联系</a>
-        <a class="line" href="#about">关于</a>
-      </nav>
+  <section class="blur-cover fixed backdrop-blur" />
+  <div class="pages">
+    <section id="home" class="cover p-13.5">
+      <HomePage />
     </section>
-    <div class="absolute top-7 right-9 flex gap-6">
-      <CustomButton type="plain" icon="gamepad">
-        在线游玩
-      </CustomButton>
-      <CustomButton type="primary" icon="login-box">
-        登录 & 注册
-      </CustomButton>
-    </div>
-  </section>
+    <section id="notice" class="cover p-13.5">
+      <h1>广告位招租</h1>
+    </section>
+    <section id="contact" class="cover p-13.5">
+      <h1>这里是联系页信息</h1>
+    </section>
+    <section id="about" class="cover p-13.5">
+      <h1 class="mb-8">
+        Q: 我们是谁？
+      </h1>
+      <p class="lh-200% font-size-4.5">
+        既然你诚心诚意的发问了，<br>我们就大发慈悲的告诉你，<br>为了防止世界被破坏，<br>为了守护世界的和平，<br>贯彻爱与真实的邪恶，<br>可爱又迷人的反派角色，<br>武藏、小次郎！<br>我们是穿梭在银河的火箭队，<br>白洞，白色的明天在等著我们！
+      </p>
+    </section>
+  </div>
+
+  <nav
+    id="nav" class="fixed left-14 bottom-10 flex gap-6 font-bold font-size-4.5" style="--line-width: 2px; --line-length: 1.7em; --line-color: #80cebc;"
+    @click="update()"
+  >
+    <a href="#home">主页</a>
+    <a href="#notice">公告</a>
+    <a href="#contact">联系</a>
+    <a href="#about">关于</a>
+  </nav>
+  <div class="absolute top-7 right-9 flex gap-6">
+    <CustomButton type="light" icon="gamepad">
+      在线游玩
+    </CustomButton>
+    <CustomButton type="primary" icon="login-box">
+      登录 & 注册
+    </CustomButton>
+  </div>
+  <i id="scroll" class="fixed right-5.5 bottom-6 ri-scroll-to-bottom-line color-white font-size-7.4" />
 </template>
 
 <style scoped>
-.target {
-  position: fixed;
-  left: 0;
-  right: 0;
-  background-image: url(Homepage@2x.png);
-  background-size: 100%;
-  opacity: 0.3;
-  z-index: 100;
+section {
+  width: 100vw;
+  height: 100vh;
+}
+
+.blur-cover {
+  clip-path: polygon(0 0, 39.3% 0, 65.5% 100%, 100% 87%, 100% 100%, 0 100%);
 }
 
 .cover {
@@ -63,23 +85,21 @@ import CustomButton from './CustomButton.vue'
 
 .cover::before {
   content: '';
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   opacity: 4%;
   background-image: url(noise.png);
+  pointer-events: none;
 }
 
-.line::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  border-width: 1em;
-  border-color: var(--line-color);
-  opacity: 4%;
+nav>a {
+  color: #787875;
+
+  &.line {
+    color: #212121;
+  }
 }
 </style>
