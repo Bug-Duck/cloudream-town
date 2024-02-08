@@ -1,74 +1,39 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
 import CustomButton from './CustomButton.vue'
-
-onMounted(() => {
-  window.location.hash = 'home'
-  update()
-})
-
-function update() {
-  setTimeout(() => {
-    const hash = window.location.hash
-    const parent = document.getElementById('nav')
-    if (parent) {
-      for (const child of parent.children)
-        child.className = ''
-    }
-    if (hash) {
-      const element = document.querySelector(`a[href="${hash}"]`)
-      if (element)
-        element.className = 'line'
-    }
-  }, 30)
-}
 </script>
 
 <template>
   <section class="blur-cover fixed backdrop-blur" />
-  <div class="pages">
-    <section class="cover p-13.5">
-      <router-view />
-    </section>
-    <!-- <section class="cover p-13.5">
-      <h1>广告位招租</h1>
-    </section>
-    <section class="cover p-13.5">
-      <h1>这里是联系页信息</h1>
-    </section>
-    <section class="cover p-13.5">
-      <h1 class="mb-8">
-        Q: 我们是谁？
-      </h1>
-      <p class="lh-200% font-size-4.5">
-        既然你诚心诚意的发问了，<br>我们就大发慈悲的告诉你，<br>为了防止世界被破坏，<br>为了守护世界的和平，<br>贯彻爱与真实的邪恶，<br>可爱又迷人的反派角色，<br>武藏、小次郎！<br>我们是穿梭在银河的火箭队，<br>白洞，白色的明天在等著我们！
-      </p>
-    </section> -->
-  </div>
+  <section class="cover p-13.5">
+    <router-view />
+  </section>
 
-  <nav
-    id="nav" class="fixed left-14 bottom-10 flex gap-6 font-bold font-size-4.5" style="--line-width: 2px; --line-length: 1.7em; --line-color: #80cebc;"
-    @click="update()"
-  >
-    <router-link to="/cloudream-town">
+  <nav class="fixed left-14 bottom-10 flex gap-6 font-bold font-size-4.5">
+    <router-link to="/town" style="--line-length: 4em;">
       云梦小镇
     </router-link>
-    <router-link to="/cloudream-plan">
+    <router-link to="/plan" style="--line-length: 4em;">
       云梦计划
     </router-link>
-    <router-link to="/about">
+    <router-link to="/about" style="--line-length: 4em;">
       关于
     </router-link>
   </nav>
   <div class="absolute top-7 right-9 flex gap-6">
-    <CustomButton type="light" icon="gamepad">
+    <CustomButton
+      v-show="['/town', '/plan'].includes($route.path)"
+      type="light" icon="gamepad" :href="{
+        '/town': 'https://shequ.codemao.cn/work/81812943',
+        '/plan': 'https://shequ.codemao.cn/work/196562887',
+      }[$route.path] ?? ''"
+    >
       在线游玩
     </CustomButton>
     <CustomButton type="primary" icon="login-box">
       登录 & 注册
     </CustomButton>
   </div>
-  <i id="scroll" class="fixed right-5.5 bottom-6 ri-scroll-to-bottom-line color-white font-size-7.4" />
+  <i class="fixed right-5.5 bottom-6 ri-scroll-to-bottom-line color-white font-size-7.4" />
 </template>
 
 <style scoped>
@@ -99,11 +64,30 @@ section {
   pointer-events: none;
 }
 
-nav>a {
+nav > a {
   color: #787875;
 
-  &.line {
+  &:hover {
+    filter: brightness(0.8);
+  }
+
+  &.router-link-active {
     color: #212121;
+
+    &::after {
+      content: '';
+      width: 100%;
+      height: 0;
+      border-width: 3px;
+      border-radius: 3px;
+      border-color: #80cebc;
+      position: relative;
+      top: -5px;
+      left: 5px;
+      display: block;
+      border-style: solid;
+      z-index: -1;
+    }
   }
 }
 </style>

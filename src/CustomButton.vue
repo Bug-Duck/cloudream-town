@@ -1,19 +1,37 @@
 <script setup lang="ts">
 defineProps<{
+  disabled?: boolean
   type?: 'dark' | 'light' | 'primary'
+  href?: string
   icon?: string
 }>()
 </script>
 
 <template>
-  <button :data-button-style="type ?? 'dark'" class="w-32 h-9.5 b-2 b-solid rounded-md backdrop-blur font-size-3.8 font-bold color-white">
-    <slot />
-    <i v-if="icon" :class="`ri-${icon}-line pl-1`" />
-  </button>
+  <a v-if="href && !disabled" :href="href" :data-button-style="type ?? 'dark'" class="backdrop-blur">
+    <span><slot /><i v-if="icon" :class="`ri-${icon}-line pl-1 my-auto`" /></span>
+  </a>
+  <a v-else :data-button-style="type ?? 'dark'" class="backdrop-blur">
+    <span><slot /><i v-if="icon" :class="`ri-${icon}-line pl-1 my-auto`" /></span>
+  </a>
 </template>
 
 <style scoped>
-button:hover {
+a {
+  width: 8rem;
+  height: 2.375rem;
+  border-width: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-style: solid;
+  border-radius: 0.375rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: white !important;
+}
+
+a:hover {
   filter: brightness(1.1);
 }
 

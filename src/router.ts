@@ -6,22 +6,10 @@ import About from './About.vue'
 const router = createRouter({
   history: createWebHistory(),
   routes: [
-    {
-      path: '/',
-      component: Town,
-    },
-    {
-      path: '/cloudream-town',
-      component: Town,
-    },
-    {
-      path: '/cloudream-plan',
-      component: Plan,
-    },
-    {
-      path: '/about',
-      component: About,
-    },
+    { path: '/', redirect: '/town' },
+    { path: '/town', component: Town },
+    { path: '/plan', component: Plan },
+    { path: '/about', component: About },
   ],
 })
 
