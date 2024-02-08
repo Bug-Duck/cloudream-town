@@ -1,5 +1,12 @@
 <script setup lang="ts">
+import { watch } from 'vue'
+import { useRoute } from 'vue-router'
 import CustomButton from './CustomButton.vue'
+
+const route = useRoute()
+watch(route, (to) => {
+  document.title = to.meta.title as string ?? '云梦艺游'
+}, { immediate: true })
 </script>
 
 <template>
@@ -16,7 +23,7 @@ import CustomButton from './CustomButton.vue'
       云梦计划
     </router-link>
     <router-link to="/about" style="--line-length: 4em;">
-      关于
+      关于我们
     </router-link>
   </nav>
   <div class="absolute top-7 right-9 flex gap-6">
