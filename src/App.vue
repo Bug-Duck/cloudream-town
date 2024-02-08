@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import CustomButton from './CustomButton.vue'
-import HomePage from './HomePage.vue'
 
 onMounted(() => {
   window.location.hash = 'home'
@@ -28,33 +27,38 @@ function update() {
 <template>
   <section class="blur-cover fixed backdrop-blur" />
   <div class="pages">
-    <section id="home" class="cover p-13.5">
-      <HomePage />
+    <section class="cover p-13.5">
+      <router-view />
     </section>
-    <section id="notice" class="cover p-13.5">
+    <!-- <section class="cover p-13.5">
       <h1>广告位招租</h1>
     </section>
-    <section id="contact" class="cover p-13.5">
+    <section class="cover p-13.5">
       <h1>这里是联系页信息</h1>
     </section>
-    <section id="about" class="cover p-13.5">
+    <section class="cover p-13.5">
       <h1 class="mb-8">
         Q: 我们是谁？
       </h1>
       <p class="lh-200% font-size-4.5">
         既然你诚心诚意的发问了，<br>我们就大发慈悲的告诉你，<br>为了防止世界被破坏，<br>为了守护世界的和平，<br>贯彻爱与真实的邪恶，<br>可爱又迷人的反派角色，<br>武藏、小次郎！<br>我们是穿梭在银河的火箭队，<br>白洞，白色的明天在等著我们！
       </p>
-    </section>
+    </section> -->
   </div>
 
   <nav
     id="nav" class="fixed left-14 bottom-10 flex gap-6 font-bold font-size-4.5" style="--line-width: 2px; --line-length: 1.7em; --line-color: #80cebc;"
     @click="update()"
   >
-    <a href="#home">主页</a>
-    <a href="#notice">公告</a>
-    <a href="#contact">联系</a>
-    <a href="#about">关于</a>
+    <router-link to="/cloudream-town">
+      云梦小镇
+    </router-link>
+    <router-link to="/cloudream-plan">
+      云梦计划
+    </router-link>
+    <router-link to="/about">
+      关于
+    </router-link>
   </nav>
   <div class="absolute top-7 right-9 flex gap-6">
     <CustomButton type="light" icon="gamepad">

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 style="position: relative; margin: 0;">
+    <h1>
       云梦计划
     </h1>
   </div>

@@ -10,18 +10,6 @@
 </template>
 
 <style>
-article {
-  position: relative;
-  margin: 0;
-}
-
-article div {
-  margin: 0;
-  position: fixed;
-  left: 100px;
-  top: 100px;
-}
-
 a {
   color: skyblue;
 }
