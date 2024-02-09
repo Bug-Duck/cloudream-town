@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import { watch } from 'vue'
 import { useRoute } from 'vue-router'
-import CustomButton from './components/CustomButton.vue'
 
 const route = useRoute()
 watch(() => route.meta.title as string, (newTitle: string) => {
-  document.title = newTitle ?? '云梦艺游'
+  document.title = ['云梦艺游', newTitle].join(' | ')
 }, { immediate: true })
 </script>
 
@@ -27,19 +26,6 @@ watch(() => route.meta.title as string, (newTitle: string) => {
       关于我们
     </router-link>
   </nav>
-  <div class="absolute top-7 right-9 flex gap-6">
-    <CustomButton
-      v-show="['/town', '/plan'].includes($route.path)" type="light" icon="gamepad" :href="{
-        '/town': 'https://shequ.codemao.cn/work/81812943',
-        '/plan': 'https://shequ.codemao.cn/work/196562887',
-      }[$route.path]"
-    >
-      在线游玩
-    </CustomButton>
-    <CustomButton disabled type="primary" icon="login-box">
-      登录 & 注册
-    </CustomButton>
-  </div>
 </template>
 
 <style scoped>

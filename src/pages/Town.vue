@@ -6,16 +6,15 @@ import Gallery from '../components/Gallery.vue'
 <template>
   <img src="/town/sign.png" class="fixed w-102 left-48 bottom-18">
   <h1><img alt="云梦小镇" src="/town/logo-dark.png" class="logo w-74"></h1>
-  <div class="my-4 w-94 h-52 bg-gray-600">
+  <div class="my-4 w-94 h-52">
     <Gallery
       :src="[
-        '/gallery/沐春节.jpg',
-        '/gallery/编陆纪行联动.jpg',
-        '/gallery/这是什么.png',
+        '/town/gallery/编陆纪行联动.jpg',
+        '/town/gallery/沐春节.jpg',
       ]"
     />
   </div>
-  <h2 class="mt-4 mb-7" style="color: #74b5d1;">
+  <h2 class="mt-3 mb-7" style="color: #74b5d1;">
     见证每一次相遇
   </h2>
   <div class="flex gap-6">
@@ -24,6 +23,9 @@ import Gallery from '../components/Gallery.vue'
     </CustomButton>
     <CustomButton disabled icon="smartphone">
       移动端下载
+    </CustomButton>
+    <CustomButton type="light" icon="gamepad" href="https://shequ.codemao.cn/work/81812943">
+      在线游玩
     </CustomButton>
   </div>
   <div class="flex gap-3 mt-4 font-size-5">
