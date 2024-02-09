@@ -8,12 +8,12 @@
 
 @font-face {
     font-family: "remixicon";
-    src: url('remixicon.eot?t=1707286667646'); /* IE9*/
-    src: url('remixicon.eot?t=1707286667646#iefix') format('embedded-opentype'), /* IE6-IE8 */
-    url("remixicon.woff2?t=1707286667646") format("woff2"),
-    url("remixicon.woff?t=1707286667646") format("woff"),
-    url('remixicon.ttf?t=1707286667646') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
-    url('remixicon.svg?t=1707286667646#remixicon') format('svg'); /* iOS 4.1- */
+    src: url('remixicon.eot?t=1707480538314'); /* IE9*/
+    src: url('remixicon.eot?t=1707480538314#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url("remixicon.woff2?t=1707480538314") format("woff2"),
+    url("remixicon.woff?t=1707480538314") format("woff"),
+    url('remixicon.ttf?t=1707480538314') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+    url('remixicon.svg?t=1707480538314#remixicon') format('svg'); /* iOS 4.1- */
     font-display: swap;
 }
 
@@ -41,12 +41,11 @@
 .ri-10x { font-size: 10em; }
 .ri-fw { text-align: center; width: 1.25em; }
 
-.ri-computer-line:before { content: "\ebca"; }
-.ri-smartphone-line:before { content: "\f15a"; }
 .ri-qq-line:before { content: "\f03b"; }
 .ri-github-line:before { content: "\edcb"; }
 .ri-bilibili-line:before { content: "\eac0"; }
 .ri-wechat-2-line:before { content: "\f2b4"; }
 .ri-gamepad-line:before { content: "\edab"; }
-.ri-login-box-line:before { content: "\eed4"; }
-.ri-scroll-to-bottom-line:before { content: "\f4b0"; }
+.ri-reserved-line:before { content: "\f07c"; }
+.ri-arrow-left-s-line:before { content: "\ea64"; }
+.ri-arrow-right-s-line:before { content: "\ea6e"; }

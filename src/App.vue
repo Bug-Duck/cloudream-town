@@ -1,8 +1,18 @@
 <script setup lang="ts">
 import { watch } from 'vue'
-import { useRoute } from 'vue-router'
+import type { RouteRecord } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 const route = useRoute()
+const router = useRouter()
+const routes = router.getRoutes()
+const frist = routes[0]
+const last = routes[routes.length - 1]
+const current = () => routes.find((cur: RouteRecord) => cur.path === route.path)!
+const index = () => routes.indexOf(current())
+const prev = () => routes[index() - 1]
+const next = () => routes[index() + 1]
+
 watch(() => route.meta.title as string, (newTitle: string) => {
   document.title = ['云梦艺游', newTitle].join(' | ')
 }, { immediate: true })
@@ -16,6 +26,9 @@ watch(() => route.meta.title as string, (newTitle: string) => {
   </section>
 
   <nav class="fixed left-14 bottom-10 flex gap-6 font-bold font-size-4.5">
+    <router-link to="/">
+      首页
+    </router-link>
     <router-link to="/town">
       云梦小镇
     </router-link>
@@ -26,6 +39,15 @@ watch(() => route.meta.title as string, (newTitle: string) => {
       关于我们
     </router-link>
   </nav>
+
+  <div class="nav fixed right-6 bottom-6 font-size-6">
+    <a v-show="$route.path !== frist.path" :href="prev()?.path">
+      <i class="ri-arrow-left-s-line" />
+    </a>
+    <a v-show="$route.path !== last.path" :href="next()?.path">
+      <i class="ri-arrow-right-s-line" />
+    </a>
+  </div>
 </template>
 
 <style scoped>
@@ -37,13 +59,18 @@ section {
 .background {
   background-position: right top;
   background-size: auto 100%;
+  background-image: var(--background);
+  --town: url('/town/background.png');
+  --plan: url('/plan/background.png');
 
-  &[data-route="/town"] {
-    background-image: url('/town/background.png');
+  &[data-route="/"],
+  &[data-route="/plan"] {
+    --background: var(--plan);
   }
 
-  &[data-route="/plan"] {
-    background-image: url('/plan/background.png');
+  &[data-route="/town"],
+  &[data-route="/about"] {
+    --background: var(--town);
   }
 }
 
@@ -94,5 +121,9 @@ nav>a {
       z-index: -1;
     }
   }
+}
+
+.nav a {
+  color: white;
 }
 </style>
