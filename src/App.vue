@@ -21,7 +21,7 @@ watch(() => route.meta.title as string, (newTitle: string) => {
 <template>
   <section class="background fixed" :data-route="$route.path" />
   <section class="blur-cover fixed backdrop-blur" />
-  <section class="cover fixed p-13.5">
+  <section class="cover fixed px-12 py-8">
     <router-view />
   </section>
 
