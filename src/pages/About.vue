@@ -15,13 +15,3 @@
     </div>
   </article>
 </template>
-
-<style scoped>
-p {
-  margin-top: 0.5em;
-}
-
-a {
-  color: skyblue;
-}
-</style>

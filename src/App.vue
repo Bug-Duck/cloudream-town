@@ -10,8 +10,9 @@ watch(() => route.meta.title as string, (newTitle: string) => {
 </script>
 
 <template>
+  <section class="background fixed" :data-route="$route.path" />
   <section class="blur-cover fixed backdrop-blur" />
-  <section class="cover p-13.5">
+  <section class="cover fixed p-13.5">
     <router-view />
   </section>
 
@@ -28,11 +29,10 @@ watch(() => route.meta.title as string, (newTitle: string) => {
   </nav>
   <div class="absolute top-7 right-9 flex gap-6">
     <CustomButton
-      v-show="['/town', '/plan'].includes($route.path)"
-      type="light" icon="gamepad" :href="{
+      v-show="['/town', '/plan'].includes($route.path)" type="light" icon="gamepad" :href="{
         '/town': 'https://shequ.codemao.cn/work/81812943',
         '/plan': 'https://shequ.codemao.cn/work/196562887',
-      }[$route.path] ?? ''"
+      }[$route.path]"
     >
       在线游玩
     </CustomButton>
@@ -40,13 +40,25 @@ watch(() => route.meta.title as string, (newTitle: string) => {
       登录 & 注册
     </CustomButton>
   </div>
-  <i class="fixed right-5.5 bottom-6 ri-scroll-to-bottom-line color-white font-size-7.4" />
 </template>
 
 <style scoped>
 section {
   width: 100vw;
   height: 100vh;
+}
+
+.background {
+  background-position: right top;
+  background-size: auto 100%;
+
+  &[data-route="/town"] {
+    background-image: url('/town/background.png');
+  }
+
+  &[data-route="/plan"] {
+    background-image: url('/plan/background.png');
+  }
 }
 
 .blur-cover {
@@ -71,7 +83,7 @@ section {
   pointer-events: none;
 }
 
-nav > a {
+nav>a {
   color: #787875;
 
   &:hover {

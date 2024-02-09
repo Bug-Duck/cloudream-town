@@ -1,11 +1,20 @@
 <script setup lang="ts">
-import CustomButton from './CustomButton.vue'
+import CustomButton from '../components/CustomButton.vue'
+import Gallery from '../components/Gallery.vue'
 </script>
 
 <template>
-  <img alt="Cloud Dream Town" src="/sign.png" class="fixed w-102 left-48 bottom-18">
-  <h1><img alt="云梦小镇" src="/logo-dark.png" class="logo w-74"></h1>
-  <div class="gallery my-4 w-94 h-52 bg-gray-600" />
+  <img src="/town/sign.png" class="fixed w-102 left-48 bottom-18">
+  <h1><img alt="云梦小镇" src="/town/logo-dark.png" class="logo w-74"></h1>
+  <div class="my-4 w-94 h-52 bg-gray-600">
+    <Gallery
+      :src="[
+        '/gallery/沐春节.jpg',
+        '/gallery/编陆纪行联动.jpg',
+        '/gallery/这是什么.png',
+      ]"
+    />
+  </div>
   <h2 class="mt-4 mb-7" style="color: #74b5d1;">
     见证每一次相遇
   </h2>
@@ -18,7 +27,9 @@ import CustomButton from './CustomButton.vue'
     </CustomButton>
   </div>
   <div class="flex gap-3 mt-4 font-size-5">
-    <a href="#"><i class="ri-qq-line" /></a>
+    <a href="https://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=VBRU23GyJWzNkqSkrryk0zFYW8OpuPO7&noverify=0&group_code=626730225"><i
+      class="ri-qq-line"
+    /></a>
     <a href="https://github.com/Bug-Duck/cloudream-town"><i class="ri-github-line" /></a>
     <a href="https://space.bilibili.com/673305329"><i class="ri-bilibili-line" /></a>
     <a href="#"><i class="ri-wechat-2-line" /></a>
