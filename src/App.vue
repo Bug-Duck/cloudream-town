@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { watch } from 'vue'
 import { useRoute } from 'vue-router'
-import CustomButton from './CustomButton.vue'
+import CustomButton from './components/CustomButton.vue'
 
 const route = useRoute()
 watch(() => route.meta.title as string, (newTitle: string) => {
@@ -55,7 +55,7 @@ section {
 
 .cover {
   clip-path: polygon(0 0, 38.2% 0, 61.8% 100%, 0 100%);
-  background-image: url(grid.svg);
+  background-image: url(/grid.svg);
   background-size: 28px;
 }
 
@@ -67,7 +67,7 @@ section {
   width: 100%;
   height: 100%;
   opacity: 4%;
-  background-image: url(noise.png);
+  background-image: url(/noise.png);
   pointer-events: none;
 }
 
