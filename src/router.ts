@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Town from './Town.vue'
-import Plan from './Plan.vue'
-import About from './About.vue'
+import Town from './pages/Town.vue'
+import Plan from './pages/Plan.vue'
+import About from './pages/About.vue'
 
 const routes = [
   { path: '/', redirect: '/town' },
