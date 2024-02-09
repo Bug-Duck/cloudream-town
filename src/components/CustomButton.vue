@@ -8,25 +8,14 @@ defineProps<{
 </script>
 
 <template>
-  <a
-    v-if="href && !disabled"
-    :data-button-style="type ?? 'dark'"
-    :href="href" disabled="false"
-    class="backdrop-blur"
-  >
+  <a v-if="href && !disabled" :href="href" disabled="false" :data-button-style="type ?? 'dark'" class="backdrop-blur">
     <span>
-      <slot />
-      <i v-if="icon" :class="`ri-${icon}-line pl-1 my-auto`" />
-    </span></a>
-  <a
-    v-else
-    :data-button-style="type ?? 'dark'"
-    :disabled="disabled ?? false"
-    class="backdrop-blur"
-  >
+      <slot /><i v-if="icon" :class="`ri-${icon}-line pl-1 my-auto`" />
+    </span>
+  </a>
+  <a v-else :disabled="disabled ?? false" :data-button-style="type ?? 'dark'" class="backdrop-blur">
     <span>
-      <slot />
-      <i v-if="icon" :class="`ri-${icon}-line pl-1 my-auto`" />
+      <slot /><i v-if="icon" :class="`ri-${icon}-line pl-1 my-auto`" />
     </span>
   </a>
 </template>
