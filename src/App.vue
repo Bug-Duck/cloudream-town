@@ -4,8 +4,8 @@ import { useRoute } from 'vue-router'
 import CustomButton from './CustomButton.vue'
 
 const route = useRoute()
-watch(route, (to) => {
-  document.title = to.meta.title as string ?? '云梦艺游'
+watch(() => route.meta.title as string, (newTitle: string) => {
+  document.title = newTitle ?? '云梦艺游'
 }, { immediate: true })
 </script>
 
@@ -16,13 +16,13 @@ watch(route, (to) => {
   </section>
 
   <nav class="fixed left-14 bottom-10 flex gap-6 font-bold font-size-4.5">
-    <router-link to="/town" style="--line-length: 4em;">
+    <router-link to="/town">
       云梦小镇
     </router-link>
-    <router-link to="/plan" style="--line-length: 4em;">
+    <router-link to="/plan">
       云梦计划
     </router-link>
-    <router-link to="/about" style="--line-length: 4em;">
+    <router-link to="/about">
       关于我们
     </router-link>
   </nav>
