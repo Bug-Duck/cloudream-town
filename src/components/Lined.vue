@@ -11,11 +11,11 @@ defineProps<{
 <template>
   <span
     class="lined" :style="`
-      --color: ${color};
-      --width: ${width ?? '3px'};
-      --length: ${length ?? '100%'};
-      --offset-x: ${offsetX ?? '-12px'};
-      --offset-y: ${offsetY ?? '8px'};`"
+      --lined-color: ${color};
+      --lined-width: ${width ?? '3px'};
+      --lined-length: ${length ?? '100%'};
+      --lined-offset-x: ${offsetX ?? '-12px'};
+      --lined-offset-y: ${offsetY ?? '8px'};`"
   >
     <slot />
   </span>
@@ -25,14 +25,13 @@ defineProps<{
 .lined::after {
   content: '';
   height: 0;
-  width: var(--length);
+  width: var(--lined-length);
   position: relative;
-  top: var(--offset-x);
-  left: var(--offset-y);
-  border-width: var(--width);
-  border-radius: var(--width);
-  border-color: var(--color);
-  border-style: solid;
+  top: var(--lined-offset-x);
+  left: var(--lined-offset-y);
+  border-width: var(--lined-width);
+  border-radius: var(--lined-width);
+  border-color: var(--lined-color);
   display: block;
   z-index: -1;
 }

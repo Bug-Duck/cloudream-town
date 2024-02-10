@@ -28,7 +28,6 @@ a {
   display: flex;
   justify-content: center;
   align-items: center;
-  border-style: solid;
   border-radius: 0.375rem;
   font-size: 0.95rem;
   font-weight: 700;

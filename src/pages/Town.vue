@@ -9,6 +9,7 @@ import Lined from '../components/Lined.vue'
   <h1><img alt="云梦小镇" src="/town/logo-dark.png" class="w-74"></h1>
   <Gallery
     class="my-4 w-94 h-52"
+    anchor="bottom-right"
     :src="[
       '/town/gallery/编陆纪行联动.jpg',
       '/town/gallery/沐春节.jpg',

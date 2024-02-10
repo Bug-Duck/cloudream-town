@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { watch } from 'vue'
-import type { RouteRecord } from 'vue-router'
 import { useRoute, useRouter } from 'vue-router'
 
 const route = useRoute()
@@ -8,13 +7,12 @@ const router = useRouter()
 const routes = router.getRoutes()
 const frist = routes[0]
 const last = routes[routes.length - 1]
-const current = () => routes.find((cur: RouteRecord) => cur.path === route.path)!
-const index = () => routes.indexOf(current())
+const index = () => routes.findIndex(cur => cur.path === route.path)
 const prev = () => routes[index() - 1]
 const next = () => routes[index() + 1]
 
 watch(() => route.meta.title as string, (newTitle: string) => {
-  document.title = ['云梦艺游', newTitle].join(' | ')
+  document.title = `云梦艺游 | ${newTitle}`
 }, { immediate: true })
 </script>
 
@@ -41,10 +39,10 @@ watch(() => route.meta.title as string, (newTitle: string) => {
   </nav>
 
   <div class="nav fixed right-6 bottom-6 font-size-6">
-    <a v-show="$route.path !== frist.path" :href="prev()?.path">
+    <a v-show="$route.path !== frist.path" id="prev" :href="prev()?.path">
       <i class="ri-arrow-left-s-line" />
     </a>
-    <a v-show="$route.path !== last.path" :href="next()?.path">
+    <a v-show="$route.path !== last.path" id="next" :href="next()?.path">
       <i class="ri-arrow-right-s-line" />
     </a>
   </div>
@@ -117,7 +115,6 @@ nav>a {
       top: -5px;
       left: 5px;
       display: block;
-      border-style: solid;
       z-index: -1;
     }
   }
