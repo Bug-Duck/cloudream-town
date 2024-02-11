@@ -17,7 +17,16 @@ watch(() => route.meta.title as string, (newTitle: string) => {
 </script>
 
 <template>
-  <section class="background fixed" :data-route="$route.path" />
+  <section
+    class="background fixed" :style="{
+      backgroundImage: `url(${{
+        '/': '/plan/background.png',
+        '/town': '/town/background.png',
+        '/plan': '/plan/background.png',
+        '/about': '/town/background.png',
+      }[$route.path]})`,
+    }"
+  />
   <section class="blur-cover fixed backdrop-blur" />
   <section class="cover fixed px-12 py-8">
     <router-view />
@@ -50,26 +59,13 @@ watch(() => route.meta.title as string, (newTitle: string) => {
 
 <style scoped>
 section {
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
 }
 
 .background {
   background-position: right top;
   background-size: auto 100%;
-  background-image: var(--background);
-  --town: url('/town/background.png');
-  --plan: url('/plan/background.png');
-
-  &[data-route="/"],
-  &[data-route="/plan"] {
-    --background: var(--plan);
-  }
-
-  &[data-route="/town"],
-  &[data-route="/about"] {
-    --background: var(--town);
-  }
 }
 
 .blur-cover {

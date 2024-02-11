@@ -29,13 +29,9 @@ import Lined from '../components/Lined.vue'
     <a href="https://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=VBRU23GyJWzNkqSkrryk0zFYW8OpuPO7&noverify=0&group_code=626730225">
       <i class="ri-qq-line" />
     </a>
-    <a href="https://github.com/Bug-Duck/cloudream-town">
-      <i class="ri-github-line" />
-    </a>
     <a href="https://space.bilibili.com/673305329">
       <i class="ri-bilibili-line" />
     </a>
-    <a href="#"><i class="ri-wechat-2-line" /></a>
   </div>
 </template>
 

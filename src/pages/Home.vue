@@ -12,9 +12,8 @@ import Gallery from '../components/Gallery.vue'
       width: calc(var(--size) * 0.7);
       "
     :src="[
-      '/characters/0.jpg',
-      '/characters/1.png',
-      '/characters/2.png',
+      '/portraits/1.png',
+      '/portraits/2.png',
     ]"
   />
 </template>
