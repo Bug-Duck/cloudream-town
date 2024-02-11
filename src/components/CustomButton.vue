@@ -1,19 +1,27 @@
 <script setup lang="ts">
-defineProps<{
+withDefaults(defineProps<{
   type?: 'dark' | 'light' | 'primary'
   href?: string
   disabled?: boolean
   icon?: string
-}>()
+}>(), {
+  type: 'dark',
+})
 </script>
 
 <template>
-  <a v-if="href && !disabled" :href="href" disabled="false" :data-button-style="type ?? 'dark'" class="backdrop-blur">
+  <a
+    v-if="href && !disabled" :data-button-style="type"
+    class="backdrop-blur" :href="href"
+  >
     <span>
       <slot /><i v-if="icon" :class="`ri-${icon}-line pl-1 my-auto`" />
     </span>
   </a>
-  <a v-else :disabled="disabled ?? false" :data-button-style="type ?? 'dark'" class="backdrop-blur">
+  <a
+    v-else :data-button-style="type"
+    class="backdrop-blur" :class="{ disabled }"
+  >
     <span>
       <slot /><i v-if="icon" :class="`ri-${icon}-line pl-1 my-auto`" />
     </span>
@@ -34,13 +42,13 @@ a {
   color: white !important;
 }
 
-[disabled="true"] {
-  filter: brightness(1);
+.disabled {
+  filter: brightness(1) !important;
   filter: grayscale(0.8);
   color: #d3d3d3 !important;
 }
 
-[disabled="false"]:hover {
+a:hover {
   filter: brightness(1.1);
 }
 
@@ -48,7 +56,7 @@ a {
   border-color: #7e8383;
   background-color: #424a49;
 
-  &[disabled="false"]:hover {
+  &:hover {
     filter: brightness(1.3);
   }
 }

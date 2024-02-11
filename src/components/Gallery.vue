@@ -1,51 +1,106 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { calc } from '../utils'
 
-defineProps<{
+const { src } = withDefaults(defineProps<{
   src: [string, string, ...string[]]
+  anchor?: `${'top' | 'bottom'}-${'left' | 'right'}`
   marignX?: string
   marignY?: string
-  anchor?: `${'top' | 'bottom'}-${'left' | 'right'}`
   navSize?: string
   navGapSize?: string
   navColor?: string
-  navBorderColor?: string
   navActiveColor?: string
-}>()
+  navBorderColor?: string
+}>(), {
+  anchor: 'bottom-left',
+  marignX: '2em',
+  marignY: '1.4em',
+  navSize: '0.5em',
+  navGapSize: '0.5em',
+  navColor: '#e1dfdd',
+  navActiveColor: '#323130',
+  navBorderColor: '#a19f9d',
+})
 
+const step = 0.01
+const epsilon = 1e-5
 const offset = ref(0)
+let intervalID: number | null = null
+
+function mod(dividend: number, divisor: number): number {
+  return (dividend % divisor + divisor) % divisor
+}
+
+function update(index: number, reverse?: boolean): void {
+  function solved() {
+    const diff = Math.abs((offset.value + index + 1) % src.length)
+    return Math.min(diff, src.length - diff) <= epsilon
+  }
+
+  if (solved())
+    return
+
+  if (intervalID !== null)
+    clearInterval(intervalID)
+
+  intervalID = setInterval(() => {
+    offset.value += (reverse ? -1 : 1) * step
+    offset.value = mod(offset.value, src.length)
+    if (solved()) {
+      offset.value = Math.round(offset.value)
+      clearInterval(intervalID!)
+      intervalID = null
+    }
+  }, 0)
+}
+
+function shifted(index: number): number {
+  return (index + offset.value) % src.length
+}
 </script>
 
 <template>
   <div
-    class="gallery"
-    :data-anchor="anchor ?? 'bottom-left'"
-    :style="`
-      --gallery-marign-x: calc(${marignX ?? '2em'});
-      --gallery-marign-y: calc(${marignY ?? '1.4em'});
-      --gallery-length: ${src.length};
-      --gallery-nav-size: ${navSize ?? '0.5em'};
-      --gallery-nav-gap-size: ${navGapSize ?? '0.5em'};
-      --gallery-nav-color: ${navColor ?? '#e1dfdd'};
-      --gallery-nav-border-color: ${navBorderColor ?? '#a19f9d'};
-      --gallery-nav-active-color: ${navActiveColor ?? '#323130'};`"
+    class="gallery" :data-anchor="anchor" :style="{
+      '--gallery-length': src.length,
+      '--gallery-width': 'calc(100% - var(--gallery-marign-x))',
+      '--gallery-height': 'calc(100% - var(--gallery-marign-y))',
+      '--gallery-marign-x': calc(marignX),
+      '--gallery-marign-y': calc(marignY),
+      '--gallery-nav-size': calc(navSize),
+      '--gallery-nav-gap-size': calc(navGapSize),
+      '--gallery-nav-color': navColor,
+      '--gallery-nav-border-color': navBorderColor,
+      '--gallery-nav-active-color': navActiveColor,
+    }"
   >
     <div
-      v-for="(item, index) in src"
-      :key="`${item}-${index}`"
-      class="page rounded" :style="`
-        --gallery-index: ${(index + offset) % src.length};
-        --gallery-raw-index: ${index};
-        background-image: url(${item});`"
-      @click="offset = src.length - index - 1"
+      v-for="(item, index) in src" :key="`${item}-${index}`"
+      class="page rounded" :class="{ first: shifted(index) + 1 > src.length }"
+      :style="{
+        'z-index': Math.round(shifted(index)),
+        'background-image': `url(${item})`,
+        '--gallery-index': shifted(index),
+        '--gallery-offset': `calc(var(--gallery-height) * ${index})`,
+      }"
+      @click="update(index)"
+    />
+    <div
+      class="page rounded" :style="{
+        'z-index': -1,
+        'opacity': offset - Math.floor(offset),
+        'background-image': `url(${src[src.length - Math.ceil(offset)]})`,
+        '--gallery-index': offset - Math.floor(offset) - 1,
+        '--gallery-offset': `calc(var(--gallery-height) * ${src.length})`,
+      }"
     />
     <nav>
       <span>
         <div
-          v-for="(item, index) in src"
-          :key="`${item}-${index}`"
-          :data-active="offset === src.length - index - 1"
-          @click="offset = src.length - index - 1"
+          v-for="(item, index) in src" :key="`${item}-${index}`"
+          :class="{ active: Math.round(shifted(index)) + 1 === src.length }"
+          @click="update(index, index + offset >= src.length)"
         />
       </span>
     </nav>
@@ -53,11 +108,6 @@ const offset = ref(0)
 </template>
 
 <style scoped>
-.gallery {
-  --gallery-width: calc(100% - var(--gallery-marign-x));
-  --gallery-height: calc(100% - var(--gallery-marign-y));
-}
-
 .page {
   position: relative;
   overflow: hidden;
@@ -67,23 +117,26 @@ const offset = ref(0)
   background-position: center;
   width: var(--gallery-width);
   height: var(--gallery-height);
-  z-index: var(--gallery-index);
-  left: calc(var(--gallery-marign-x) * var(--gallery-anchor-x));
-  top: calc(var(--gallery-marign-y) * var(--gallery-anchor-y) - var(--gallery-offset));
+  left: calc(var(--gallery-marign-x) * var(--gallery-page-x));
+  top: calc(var(--gallery-marign-y) * var(--gallery-page-y) - var(--gallery-offset));
   --gallery-step: calc(var(--gallery-index) / (var(--gallery-length) - 1));
-  --gallery-offset: calc(var(--gallery-height) * var(--gallery-raw-index));
-}
 
-.page::after {
-  content: '';
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(255, 255, 255, calc((1 - var(--gallery-step)) / 2));
+  &.first {
+    opacity: calc(var(--gallery-length) - var(--gallery-index));
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, calc((1 - var(--gallery-step)) / 2));
+  }
 }
 
 nav {
   position: relative;
+  top: calc(var(--gallery-nav-y) - var(--gallery-height) * (var(--gallery-length) + 1));
   z-index: var(--gallery-length);
 
   span {
@@ -93,14 +146,14 @@ nav {
     width: fit-content;
 
     div {
-      width:  var(--gallery-nav-size);
+      width: var(--gallery-nav-size);
       height: var(--gallery-nav-size);
       background-color: var(--gallery-nav-color);
       border-width: 1px;
       border-radius: var(--gallery-nav-size);
       border-color: var(--gallery-nav-border-color);
 
-      &[data-active="true"] {
+      &.active {
         background-color: var(--gallery-nav-active-color);
       }
     }
@@ -109,8 +162,9 @@ nav {
 
 [data-anchor$="-left"] {
   .page {
-    --gallery-anchor-x: calc(1 - var(--gallery-step));
+    --gallery-page-x: calc(1 - var(--gallery-step));
   }
+
   nav {
     left: var(--gallery-nav-size);
   }
@@ -118,8 +172,9 @@ nav {
 
 [data-anchor$="-right"] {
   .page {
-    --gallery-anchor-x: var(--gallery-step);
+    --gallery-page-x: var(--gallery-step);
   }
+
   nav {
     left: calc(100% - var(--gallery-length) * (var(--gallery-nav-size) + var(--gallery-nav-gap-size)));
   }
@@ -127,20 +182,21 @@ nav {
 
 [data-anchor^="top-"] {
   .page {
-    --gallery-anchor-y: calc(1 - var(--gallery-step));
+    --gallery-page-y: calc(1 - var(--gallery-step));
   }
+
   nav {
-    top: calc(var(--gallery-nav-size) - var(--gallery-height) * var(--gallery-length));
+    --gallery-nav-y: var(--gallery-nav-size);
   }
 }
 
 [data-anchor^="bottom-"] {
   .page {
-    --gallery-anchor-y: var(--gallery-step);
+    --gallery-page-y: var(--gallery-step);
   }
 
   nav {
-    top: calc(100% - 2 * var(--gallery-nav-size) - var(--gallery-height) * var(--gallery-length));
+    --gallery-nav-y: calc(100% - 2 * var(--gallery-nav-size));
   }
 }
 </style>

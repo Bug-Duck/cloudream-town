@@ -1,21 +1,29 @@
 <script setup lang="ts">
-defineProps<{
+import { calc } from '../utils'
+
+withDefaults(defineProps<{
   color: string
   width?: string
   length?: string
   offsetX?: string
   offsetY?: string
-}>()
+}>(), {
+  width: '3px',
+  length: '100%',
+  offsetX: '-12px',
+  offsetY: '8px',
+})
 </script>
 
 <template>
   <span
-    class="lined" :style="`
-      --lined-color: ${color};
-      --lined-width: ${width ?? '3px'};
-      --lined-length: ${length ?? '100%'};
-      --lined-offset-x: ${offsetX ?? '-12px'};
-      --lined-offset-y: ${offsetY ?? '8px'};`"
+    class="lined" :style="{
+      '--lined-color': color,
+      '--lined-width': calc(width),
+      '--lined-length': calc(length),
+      '--lined-offset-x': calc(offsetX),
+      '--lined-offset-y': calc(offsetY),
+    }"
   >
     <slot />
   </span>
