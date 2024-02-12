@@ -23,7 +23,7 @@ const { src } = withDefaults(defineProps<{
   navBorderColor: '#a19f9d',
 })
 
-const step = 0.01
+const step = 5e-3
 const epsilon = 1e-5
 const offset = ref(0)
 let intervalID: number | null = null
@@ -45,10 +45,10 @@ function update(index: number, reverse?: boolean): void {
     clearInterval(intervalID)
 
   intervalID = setInterval(() => {
-    offset.value += (reverse ? -1 : 1) * step
+    offset.value += (reverse ? -1 : 1) * step * src.length
     offset.value = mod(offset.value, src.length)
     if (solved()) {
-      offset.value = Math.round(offset.value)
+      offset.value = Math.round(offset.value) % src.length
       clearInterval(intervalID!)
       intervalID = null
     }
@@ -100,7 +100,7 @@ function shifted(index: number): number {
         <div
           v-for="(item, index) in src" :key="`${item}-${index}`"
           :class="{ active: Math.round(shifted(index)) + 1 === src.length }"
-          @click="update(index, index + offset >= src.length)"
+          @click="update(index, offset > src.length - index - 1)"
         />
       </span>
     </nav>
